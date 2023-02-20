@@ -1,46 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using Script.Constant;
+using Script.View;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
+using static Script.Constant.Constant;
+using Slider = UnityEngine.UI.Slider;
 
 public class SetPanel : Common
 {
-    public Slider slider_sound;
-    public Slider slider_music;
+    public Slider soundSlider;
+    public Slider musicSlider;
+    public void OnSoundChange(float f)
+    {
+        PlayerPrefs.SetFloat(SoundValue, f);
+    }
+    
+    public void OnMusicChange(float f)
+    {
+        Debug.Log("music: " + f);
+        PlayerPrefs.SetFloat(MusicValue, f);
+    }
 
-    // 点击关闭按钮
-    public void OnBtnCloseClick()
+    public void OnCloseClick()
     {
         Hide();
     }
 
-    // 调整音效大小
-    public void OnSoundValueChange(float f)
-    {
-        // 1. 修改音量大小 TODO
-        // 2. 保存数据
-        PlayerPrefs.SetFloat(Const.SoundSliderValue, f);
-        Debug.Log("sound.value: " + f);
-    }
-
-    // 调整背景音乐大小
-    public void OnMusicValueChange(float f)
-    {
-        // 1. 修改音量大小 TODO
-        // 2. 保存数据
-        PlayerPrefs.SetFloat(Const.MusicSliderValue, f);
-        Debug.Log("music.value: " + f);
-    }
-
-    // 重写继承自父类的Show方法，需要添加音效初始值
     public override void Show()
     {
         base.Show();
-        // 对界面进行初始化
-        slider_sound.value = PlayerPrefs.GetFloat(Const.SoundSliderValue, 0); // 若没有获取到，则默认值为0
-        slider_music.value = PlayerPrefs.GetFloat(Const.MusicSliderValue, 0);
-
-        Debug.Log("sound.value: " + slider_sound.value);
-        Debug.Log("music.value: " + slider_music.value);
+        soundSlider.value = PlayerPrefs.GetFloat(SoundValue, 0);
+        musicSlider.value = PlayerPrefs.GetFloat(MusicValue, 0);
     }
 }

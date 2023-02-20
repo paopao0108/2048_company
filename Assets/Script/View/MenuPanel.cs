@@ -4,29 +4,25 @@ using UnityEngine;
 
 public class MenuPanel : MonoBehaviour
 {
-    public SelectModePanel selectModelPanel;
+    public SelectPanel selectPanel;
+
     public SetPanel setPanel;
 
-    
-
-    // µã»÷¿ªÊ¼°´Å¥
+    // ç‚¹å‡»å¼€å§‹
     public void OnStartClick()
     {
-        // Ìø×ªµ½Ñ¡ÔñÄ£Ê½Ò³Ãæ
-        selectModelPanel.Show();
-
+        // æ˜¾ç¤ºé€‰æ‹©æ¨¡å¼
+        selectPanel.Show();
     }
-
-    // µã»÷ÉèÖÃ°´Å¥
-    public void OnSettingClick()
+    
+    // ç‚¹å‡»è®¾ç½®
+    public void OnSetClick()
     {
-        // Ìø×ªµ½ÉèÖÃÒ³Ãæ
         setPanel.Show();
     }
 
-    // µã»÷ÍË³ö°´Å¥
     public void OnExitClick()
     {
-
+        
     }
 }
