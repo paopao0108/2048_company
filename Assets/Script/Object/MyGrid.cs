@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MyGrid : MonoBehaviour
 {
-    public Number number;
+    private Number number;
     // ÅĞ¶ÏÊÇ·ñÓĞÊı×Ö
     public bool IsHasNumber()
     {

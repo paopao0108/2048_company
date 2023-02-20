@@ -119,7 +119,9 @@ namespace Assets.Script.View
             if (canCreateNumberGrid.Count == 0) return; // 没有可以创建数字的格子，直接返回
         
             // 产生一个随机的格子索引
-            int gridIndex = RandomNumberGenerator.GetInt32(0, canCreateNumberGrid.Count);
+            //int gridIndex = RandomNumberGenerator.GetInt32(0, canCreateNumberGrid.Count);
+            int gridIndex = Random.Range(0, canCreateNumberGrid.Count);
+
             Debug.Log("格子索引：" + gridIndex);
             GameObject gameObject = Instantiate(numberPrefab, canCreateNumberGrid[gridIndex].transform); // 实例化数字预制体，数字的父节点为格子
 
@@ -188,12 +190,28 @@ namespace Assets.Script.View
                     Number number = grids[i][j].GetNumber();
                     if (grids[i][j].IsHasNumber()) // 当前格子有数字
                     {
-                        if (!grids[i - 1][j].IsHasNumber()) number.MovetoGrid(grids[i - 1][j]);// 上一行格子没有数字，则往上移
-                        else {} // TODO: 上一行有数字，判断是否可以合并
+                        for (int m = i - 1; m >= 0; m--) // 从上一行格子遍历
+                        {
+                            if (!grids[m][j].IsHasNumber()) number.MovetoGrid(grids[m][j]);// 上一行格子没有数字，则往上移
+                            else
+                            {
+                                if (number.IsMerge(grids[m][j]))
+                                {
+                                    grids[m][j].GetNumber().NumberMerge();
+
+                                    number.GetGrid().SetNumber(null); // 将格子置空
+                                    GameObject.Destroy(number.gameObject); // 销毁数字
+                                }
+
+                                break;
+                            } // TODO: 上一行有数字，判断是否可以合并
+                        }
+                        
                     }
                 
                 }
             }
+            CreateNumber();
         }
 
         private void Awake()

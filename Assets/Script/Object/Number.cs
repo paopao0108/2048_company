@@ -7,21 +7,21 @@ using UnityEngine;
 public class Number : MonoBehaviour
 {
     private UnityEngine.UI.Image bg;
-    private TextMeshPro numberValue;
+    private TextMeshProUGUI numberValue;
 
-    public MyGrid InGrid; // 数字所在的格子
+    private MyGrid InGrid; // 数字所在的格子
 
     private void Awake()
     {
         bg = transform.GetComponent<UnityEngine.UI.Image>();
-        numberValue = transform.Find("text").GetComponent<TextMeshPro>(); // 获取其子节点text的组件TextMeshPro
+        numberValue = transform.Find("text").GetComponent<TextMeshProUGUI>(); // 获取其子节点text的组件TextMeshPro
     }
 
     public void InitNumber(MyGrid myGrid)
     {
         myGrid.SetNumber(this); // 设置格子上的数字
         this.SetGrid(myGrid); // 设置数字所在格子
-        this.SetNumber(4);
+        this.SetNumber(2);
     }
 
 
@@ -53,10 +53,22 @@ public class Number : MonoBehaviour
     public void MovetoGrid(MyGrid myGrid)
     {
         transform.SetParent(myGrid.transform); // 设置当前格子的父节点
+        transform.localPosition = Vector3.zero;
 
         this.GetGrid().SetNumber(null); // 将当前数字对应的格子中的数字置空
 
         myGrid.SetNumber(this); // 给指定格子设置数字
         this.SetGrid(myGrid); // 给当前数字设置新的格子
+    }
+
+    public bool IsMerge(MyGrid myGrid)
+    {
+        return int.Parse(myGrid.GetNumber().numberValue.text) == GetNumber();
+        //return myGrid.GetNumber().numberValue.text == numberValue.text;
+    }
+
+    public void NumberMerge()
+    {
+        SetNumber(GetNumber() * 2);
     }
 }

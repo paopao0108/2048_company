@@ -24,7 +24,7 @@ public class SetPanel : Common
 
     public void OnCloseClick()
     {
-        Hide();
+        base.Hide();
     }
 
     public override void Show()
